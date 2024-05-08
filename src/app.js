@@ -12,14 +12,14 @@ app.use('/public', express.static('public'));
 
 app.use(cors()); // Use cors middleware
 
-app.use('/api/v1', api);
+app.get('/', (req, res) => {
+  res.send('Welcome to my REST API!');
+});
 
 app.get('/api/instagram-key', (req, res) => {
   res.json({ key: process.env.INSTAGRAM_API_KEY });
 });
 
-app.get('/', (req, res) => {
-  res.send('Welcome to my REST API!');
-});
+app.use('/api/v1', api);
 
 export default app;
