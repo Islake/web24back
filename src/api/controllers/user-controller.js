@@ -51,6 +51,14 @@ const getOrdersByUserId = async (req, res) => {
   }
 };
 
+/**
+ * Create a new user. The request body must contain the user data.
+ * The password will be hashed before saving. The avatar will be set to a default value if not provided.
+ * @param req The request object must contain the user data.
+ * @param res If the user is created successfully, the response object will have the user data.
+ * @returns {Promise<void>}
+ * If there is an error, the response object will have a status code of 500.
+ */
 const postUser = async (req, res) => {
   try {
     const { username, password, first_name, last_name, address, email, phone, avatar } = req.body;
