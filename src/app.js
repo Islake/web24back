@@ -42,4 +42,6 @@ app.get('/api/instagram-key', (req, res) => {
 
 app.use('/api/v1', api);
 
+app.use('/docs', express.static('docs'));
+
 export default app;

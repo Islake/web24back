@@ -23,7 +23,7 @@ const postOrder = async (req, res) => {
     res.status(201).json({ orderId: order.insertId });
   } catch (error) {
     console.error('Error adding order:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error ' });
   }
 };
 
