@@ -3,10 +3,10 @@
  * @apiName PostOrder
  * @apiGroup Cart
  *
- * @apiParam {Number} userId User's ID.
- * @apiParam {Number} restaurantId ID of the restaurant for the order.
- * @apiParam {Number} totalCost Total cost of the order.
- * @apiParam {String} status Status of the order.
+ * @apiParam (body) {Number} userId User's ID.
+ * @apiParam (body) {Number} restaurantId ID of the restaurant for the order.
+ * @apiParam (body) {Number} totalCost Total cost of the order.
+ * @apiParam (body) {String} status Status of the order.
  * @apiSuccess {Object} order Order object.
  */
 cartRouter.route('/')
