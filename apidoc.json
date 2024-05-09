@@ -1,12 +1,12 @@
 {
     "name": "My API",
     "version": "1.0.0",
-    "description": "API documentation for my project",
-    "title": "My API Documentation",
+    "description": "API documentation for webproject",
+    "title": "AsianFlavor API Documentation",
     "url": "/api/v1",
     "header": {
-        "title": "My API Documentation",
-        "content": "<p>This is a sample API documentation.</p>"
+        "title": "web project 2024 AsianFlavor",
+        "content": "<p>Here's some nice little info about things.</p>"
     },
     "template": {
         "withCompare": true,
