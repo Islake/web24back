@@ -1,22 +1,43 @@
+/**
+ * Functions for interacting with menu items in the database.
+ * @module menuitemModel
+ */
+
 import promisePool from '../../utils/database.js';
 
+/**
+ * Fetches all menu items from the database.
+ * @returns {Promise<Array>} Promise object represents an array of menu items.
+ * @throws {Error} Database error.
+ */
 const listAllItems = async () => {
   try {
     const [rows] = await promisePool.query('SELECT * FROM menuitem');
     return rows;
   } catch (error) {
-    console.error('Error fetching all users:', error);
+    console.error('Error fetching all menu items:', error);
     throw error;
   }
 };
 
+/**
+ * Adds a new menu item to the database.
+ * @param {Object} item - Menu item object.
+ * @param {string} item.name - Name of the menu item.
+ * @param {number} item.price - Price of the menu item.
+ * @param {string} item.description - Description of the menu item.
+ * @param {Array<string>} [item.allergen] - List of allergens in the menu item.
+ * @param {string} item.category - Category of the menu item.
+ * @param {string} image - Filename of the menu item image.
+ * @returns {Promise<Object|boolean>} Promise object represents the result of the operation.
+ * @throws {Error} Database error.
+ */
 const addItem = async (item, image) => {
-
-  const {name, price, description, allergen, category} = item;
+  const { name, price, description, allergen, category } = item;
   const allergenValue = allergen ? allergen.join(', ') : "-";
   const sql = `INSERT INTO menuitem (name, price, description, allergen, category, image)
                VALUES (?, ?, ?, ?, ?, ?)`;
-  const params = [name, price, description, allergenValue, category, image.filename].map(
+  const params = [name, price, description, allergenValue, category, image].map(
     (arvo) => {
       if (arvo === undefined) {
         return null;
@@ -26,37 +47,54 @@ const addItem = async (item, image) => {
     }
   );
 
-  console.log('params', params);
-  const rows = await promisePool.execute(sql, params);
-  // console.log('rows', rows);
-  if (rows[0].affectedRows === 0) {
-    return false;
+  try {
+    const [rows] = await promisePool.execute(sql, params);
+    if (rows.affectedRows === 0) {
+      return false;
+    }
+    return { menuitem_id: rows.insertId };
+  } catch (error) {
+    console.error('Error adding a new menu item:', error);
+    throw error;
   }
-  return {menuitem_id: rows[0].insertId};
 };
 
+/**
+ * Fetches a list of all menu item categories from the database.
+ * @returns {Promise<Array>} Promise object represents an array of menu item categories.
+ * @throws {Error} Database error.
+ */
 const categoryList = async () => {
   try {
     const [rows] = await promisePool.query('SELECT category FROM menuitem');
-    // console.log('rows', rows);
     return rows;
   } catch (error) {
-    console.error('Error fetching all users:', error);
+    console.error('Error fetching menu item categories:', error);
     throw error;
   }
 }
 
+/**
+ * Fetches a list of all allergens from the database.
+ * @returns {Promise<Array>} Promise object represents an array of allergens.
+ * @throws {Error} Database error.
+ */
 const allergenList = async () => {
   try {
     const [rows] = await promisePool.query('SELECT allergen FROM menuitem');
-    console.log('rows', rows);
     return rows;
   } catch (error) {
-    console.error('Error fetching all users:', error);
+    console.error('Error fetching allergens:', error);
     throw error;
   }
 }
 
+/**
+ * Removes a menu item from the database.
+ * @param {string} name - Name of the menu item to be removed.
+ * @returns {Promise<Object|boolean>} Promise object represents the result of the operation.
+ * @throws {Error} Database error.
+ */
 const removeItem = async (name) => {
   try {
     const [id_rows] = await promisePool.execute('SELECT menuitem_id FROM menuitem WHERE name = ?', [name]);
@@ -82,11 +120,17 @@ const removeItem = async (name) => {
     return { message: 'success' };
 
   } catch (error) {
-    console.error('Error deleting item:', error);
+    console.error('Error deleting menu item:', error);
     throw error;
   }
 };
 
+/**
+ * Fetches a list of menu items associated with a specific order.
+ * @param {number} orderId - ID of the order.
+ * @returns {Promise<Array>} Promise object represents an array of menu item names.
+ * @throws {Error} Database error.
+ */
 const listOrderItems = async (orderId) => {
   try {
     const [rows] = await promisePool.execute(
@@ -100,20 +144,32 @@ const listOrderItems = async (orderId) => {
   }
 }
 
+/**
+ * Modifies a menu item in the database.
+ * @param {Object} item - Modified menu item object.
+ * @param {string} id - ID of the menu item to be modified.
+ * @param {Object} [file] - File object for the menu item image.
+ * @returns {Promise<Object|boolean>} Promise object represents the result of the operation.
+ * @throws {Error} Database error.
+ */
 const modifyItem = async (item, id, file) => {
   if (file) {
     item.image = file.filename;
   }
 
   const sql = promisePool.format(`UPDATE menuitem SET ? WHERE name = ?`, [item, id]);
-  const [rows] = await promisePool.execute(sql);
+  try {
+    const [rows] = await promisePool.execute(sql);
 
-  if (rows.affectedRows === 0) {
-    return false;
+    if (rows.affectedRows === 0) {
+      return false;
+    }
+    return { message: 'success' };
+  } catch (error) {
+    console.error('Error modifying menu item:', error);
+    throw error;
   }
-  return { message: 'success' };
 }
-
 
 export {
   listAllItems,
