@@ -34,13 +34,24 @@ authRouter.route('/me').get(authenticateToken, getMe);
 
 /**
  * Route for initiating a password reset.
+ * @name post/api/v1/auth/forgot-password
+ * @memberof module:routes/authRouter
+ * @function
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {void}
  */
 authRouter.route('/forgot-password')
   .post(initiatePasswordReset);
 
 /**
  * Route for resetting a password.
-
+ * @name get/api/v1/auth/reset-password/:user_id/:token
+ * @function
+ * @memberof module:routes/authRouter
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {void}
  */
 authRouter.route('/reset-password/:user_id/:token')
   .get(getResetPassword)

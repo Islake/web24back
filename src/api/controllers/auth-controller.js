@@ -18,6 +18,7 @@ import 'dotenv/config';
  * @apiGroup Authentication
  *
  * @apiParam {String} username User's username
+ * @apiParam {String} password User's password
  *
  * @apiSuccess {Object} user User's information
  * @apiSuccess {String} token User's token
