@@ -23,6 +23,12 @@ const findUserById = async (id) => {
   }
 };
 
+/**
+ * Find a user by username. The username must be provided.
+ * @param username {string} Username
+ * @returns {Promise<*|boolean>} Promise object represents the user object or false if the user is not found.
+ * @throws {Error} Database error.
+ */
 const userByUsername = async (username) => {
   const sql = `SELECT * FROM user WHERE username = ?`;
   const [rows] = await promisePool.execute(sql, [username]);
@@ -32,6 +38,12 @@ const userByUsername = async (username) => {
   return rows[0];
 }
 
+/**
+ * Find a user by email. The email must be provided.
+ * @param email {string} Email address
+ * @returns {Promise<*|boolean>}  Promise object represents the user object or false if the user is not found.
+ * @throws {Error} Database error.
+ */
 const userByEmail = async (email) => {
   const sql = `SELECT * FROM user WHERE email = ?`;
   const [rows] = await promisePool.execute(sql, [email]);
@@ -52,6 +64,13 @@ const ordersByUserId = async (id) => {
   }
 };
 
+/**
+ * Create a new user. The user object must have the following properties:
+ * role, username, password, first_name, last_name, address, email, phone, avatar
+ * @param user {object}
+ * @returns {Promise<{user_id: number}|boolean>}
+ * @throws {Error} Database error.
+ */
 const createUser = async (user) => {
   try {
     const {role, username, password, first_name, last_name, address, email, phone, avatar} = user;
@@ -69,6 +88,7 @@ const createUser = async (user) => {
   }
 };
 
+
 const modifyUser = async (user, id) => {
   const sql = promisePool.format(`UPDATE user SET ? WHERE user_id = ?`,
     [user, id]);
@@ -79,6 +99,13 @@ const modifyUser = async (user, id) => {
   return {message: 'success'};
 };
 
+/**
+ * Change the password for a user. The user id and new password must be provided.
+ * @param id {number} User ID
+ * @param password {string} New password
+ * @returns {Promise<{message: string}|boolean>} Promise object represents the result of the operation.
+ * @throws {Error} Database error.
+ */
 const changePassword = async (id, password) => {
   const sql = `UPDATE user SET password = ? WHERE user_id = ?`;
   const rows = await promisePool.execute(sql, [password, id]);
@@ -88,6 +115,12 @@ const changePassword = async (id, password) => {
   return { message: 'success' };
 };
 
+/**
+ * Remove a user from the database. The user id must be provided.
+ * @param id {number} User ID
+ * @returns {Promise<{message: string}|boolean>} Promise object represents the result of the operation.
+ * @throws {Error} Database error.
+ */
 const removeUser = async (id) => {
   const sql = `DELETE FROM user WHERE user_id = ?`;
   const rows = await promisePool.execute(sql, [id]);
@@ -95,7 +128,6 @@ const removeUser = async (id) => {
     return false;
   }
   return {message: 'success'};
-
 }
 
 export {
