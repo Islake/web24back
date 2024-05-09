@@ -6,13 +6,18 @@ import {
   modifyOrder
 } from "../models/cart-model.js";
 
+/**
+ * Handles the creation of a new order.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the order is created.
+ */
 const postOrder = async (req, res) => {
   try {
     const userId = req.body.userId;
-    const { totalCost, status , restaurantId} = req.body;
+    const { totalCost, status, restaurantId } = req.body;
     const date = new Date(); // or get it from req.body if it's provided
     const order = await addOrder(userId, restaurantId, totalCost, date, status);
-    //console.log(order);
 
     // Send the order ID along with the response
     res.status(201).json({ orderId: order.insertId });
@@ -22,6 +27,12 @@ const postOrder = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves all orders for a specific user.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the orders.
+ */
 const getOrdersByUserId = async (req, res) => {
   try {
     const orders = await getOrdersByUser(req.params.userId);
@@ -32,6 +43,12 @@ const getOrdersByUserId = async (req, res) => {
   }
 };
 
+/**
+ * Handles the creation of a new order item.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the order item is created.
+ */
 const postOrderItem = async (req, res) => {
   try {
     const orderId = req.params.orderId;
@@ -53,6 +70,12 @@ const postOrderItem = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves all orders.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the orders.
+ */
 const getAllOrders = async (req, res) => {
   try {
     const orders = await getOrders();
@@ -63,6 +86,12 @@ const getAllOrders = async (req, res) => {
   }
 }
 
+/**
+ * Updates the status of an order.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the order is updated.
+ */
 const putOrder = async (req, res) => {
   try {
     const orderId = req.params.orderId;

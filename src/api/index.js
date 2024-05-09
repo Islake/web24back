@@ -1,3 +1,7 @@
+/**
+ * Express router configuration for the API endpoints.
+ * @module api/index
+ */
 import express from 'express';
 import userRouter from './routes/user-router.js';
 import itemRouter from './routes/menuitem-router.js';
