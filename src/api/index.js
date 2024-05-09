@@ -1,4 +1,17 @@
 /**
+ * @apiDefine BaseRoutes API Base Routes
+ *
+ * This file sets up the base routes for each section of the API:
+ * - /users: User related endpoints
+ * - /items: Menu item related endpoints
+ * - /orders: Order related endpoints
+ * - /auth: Authentication related endpoints
+ * - /restaurants: Restaurant related endpoints
+ * - /menu: Daily menu related endpoints
+ *
+ * The actual API endpoints are defined within the respective routers.
+ */
+/**
  * Express router configuration for the API endpoints.
  * @module api/index
  */

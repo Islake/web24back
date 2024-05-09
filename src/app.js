@@ -17,24 +17,34 @@ app.use('/public', express.static('uploads'));
 app.use(cors());
 
 /**
- * GET request handler for the root route.
- * @name GET /
- * @function
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @returns {void}
+ * @api {get} / Request root
+ * @apiName GetRoot
+ * @apiGroup Root
+ *
+ * @apiSuccess {String} message Welcome message.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "Welcome to my REST API!"
+ *     }
  */
 app.get('/', (req, res) => {
   res.send('Welcome to my REST API!');
 });
 
 /**
- * GET request handler for the '/api/instagram-key' route.
- * @name GET /api/instagram-key
- * @function
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- * @returns {void}
+ * @api {get} /api/instagram-key Get Instagram Key
+ * @apiName GetInstagramKey
+ * @apiGroup Instagram
+ *
+ * @apiSuccess {String} key Instagram API Key.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "key": "YOUR_INSTAGRAM_API_KEY"
+ *     }
  */
 app.get('/api/instagram-key', (req, res) => {
   res.json({ key: process.env.INSTAGRAM_API_KEY });

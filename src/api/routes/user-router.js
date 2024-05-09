@@ -61,10 +61,26 @@ userRouter.route('/')
     validationErrors,
     postUser); //Add new user
 
+/**
+ * Route serving user orders operations.
+ * @name /:id/orders
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 userRouter.route('/:id/orders')
   .get(getOrdersByUserId) //List all users
 // .post(postUser); //Add new user
 
+/**
+ * Route serving user operations, such as find, modify or remove user for a specific identifier.
+ * @name /:identifier
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 userRouter.route('/:identifier')
   .get(getUser) //Find user by ID or username
   .put(authenticateToken, upload.single('avatar'), putUser) //Modify user
