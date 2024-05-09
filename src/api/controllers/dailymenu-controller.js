@@ -16,7 +16,12 @@ const getMenuByDate = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
+/**
+ * Add a new menu.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const postMenu = async (req, res) => {
   console.log('req.body', req.body);
   const result = await addMenu(req.body);
@@ -27,7 +32,12 @@ const postMenu = async (req, res) => {
     res.sendStatus(400);
   }
 };
-
+/**
+ * Get menu by week and restaurant.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 const getMenuByWeekAndRestaurant = async (req, res) => {
   try {
     const startDate = req.query.start_date;
