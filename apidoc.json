@@ -6,7 +6,8 @@
     "url": "/api/v1",
     "header": {
         "title": "web project 2024 AsianFlavor",
-        "content": "<p>Here's some nice little info about things.</p>"
+        "content": "<p>Here's some nice little info about things.</p>",
+        "url" : "https://users.metropolia.fi/~wilmais/web-projekti/HTML/index.html"
     },
     "template": {
         "withCompare": true,
