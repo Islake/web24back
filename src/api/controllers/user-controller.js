@@ -9,6 +9,12 @@ import {
   removeUser,
 } from "../models/user-model.js";
 
+/**
+ * Get all users.
+ * @param req The request object.
+ * @param res The response object will have a list of all users.
+ * @return {Promise<Object>} A list of all users.
+ */
 const getAllUsers = async (req, res) => {
   try {
     const users = await listAllUsers();
@@ -19,6 +25,12 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+/**
+ * Get a user by ID or username.
+ * @param req The request object must contain the user ID or username.
+ * @param res The response object will have the user data if found.
+ * @return {Promise<Object>} The user data if found.
+ */
 const getUser = async (req, res) => {
   try {
     const identifier = req.params.identifier;
@@ -41,6 +53,12 @@ const getUser = async (req, res) => {
   }
 };
 
+/**
+ * Get orders by user ID.
+ * @param req The request object must contain the user ID.
+ * @param res The response object will have a list of orders for the user.
+ * @return {Promise<Object>} A list of orders for the user.
+ */
 const getOrdersByUserId = async (req, res) => {
   try {
     const orders = await ordersByUserId(req.params.id);
@@ -52,12 +70,10 @@ const getOrdersByUserId = async (req, res) => {
 };
 
 /**
- * Create a new user. The request body must contain the user data.
- * The password will be hashed before saving. The avatar will be set to a default value if not provided.
+ * Add a new user. The request body must contain the user data.
  * @param req The request object must contain the user data.
- * @param res If the user is created successfully, the response object will have the user data.
- * @returns {Promise<void>}
- * If there is an error, the response object will have a status code of 500.
+ * @param res The response object will have the new user data.
+ * @return {Promise<Object>} The new user data.
  */
 const postUser = async (req, res) => {
   try {
@@ -91,6 +107,12 @@ const postUser = async (req, res) => {
   }
 }
 
+/**
+ * Modify an existing user. The request body must contain the user data.
+ * @param req The request object must contain the user data.
+ * @param res The response object will have the modified user data.
+ * @return {Promise<Object>} The modified user data.
+ */
 const putUser = async (req, res) => {
   try {
     const userId = req.params.identifier;
@@ -116,6 +138,12 @@ const putUser = async (req, res) => {
   }
 };
 
+/**
+ * Delete a user by ID.
+ * @param req The request object must contain the user ID.
+ * @param res The response object will have a message confirming the deletion.
+ * @return {Promise<Object>} A message confirming the deletion.
+ */
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.identifier;

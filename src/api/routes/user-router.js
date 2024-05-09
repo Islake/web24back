@@ -54,6 +54,14 @@ const validateUser = [
   body('password').trim().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long').escape(),
 ];
 
+/**
+ * Route serving user operations.
+ * @name /api/v1/users
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware.
+ */
 userRouter.route('/')
   .get(getAllUsers) //List all users
   .post(
